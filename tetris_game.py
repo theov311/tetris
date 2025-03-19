@@ -167,65 +167,78 @@ class TetrisGame:
     def draw_score_board(self):
         self.canvas_score.delete("all")
         self.canvas_score.create_text(90, 30, text="SCORES", font=("Arial", 16, "bold"))
-        
+    
         self.canvas_score.create_text(90, 70, text=f"Humain: {self.scores['human']}", 
-                                     font=("Arial", 12))
+                                 font=("Arial", 12))
         self.canvas_score.create_text(90, 100, text=f"IA: {self.scores['ai']}", 
-                                     font=("Arial", 12))
-        
-        self.canvas_score.create_text(90, 140, text=f"Lignes Humain: {self.lines_cleared['human']}", 
-                                     font=("Arial", 10))
-        self.canvas_score.create_text(90, 170, text=f"Lignes IA: {self.lines_cleared['ai']}", 
-                                     font=("Arial", 10))
-        
-        # Afficher les prochaines pièces
-        self.canvas_score.create_text(90, 210, text="Prochaine pièce:", font=("Arial", 10))
-        
-        # Humain
+                                 font=("Arial", 12))
+    
+        self.canvas_score.create_text(90, 130, text=f"Lignes Humain: {self.lines_cleared['human']}", 
+                                 font=("Arial", 10))
+        self.canvas_score.create_text(90, 150, text=f"Lignes IA: {self.lines_cleared['ai']}", 
+                                 font=("Arial", 10))
+    
+    # Cadres pour mieux séparer les pièces
+        self.canvas_score.create_rectangle(10, 175, 170, 265, outline="#CCCCCC")
+        self.canvas_score.create_rectangle(10, 275, 170, 365, outline="#CCCCCC")
+    
+    # Afficher les prochaines pièces avec un espacement significativement amélioré
+        self.canvas_score.create_text(90, 185, text="Prochaine pièce:", font=("Arial", 10, "bold"))
+        self.canvas_score.create_text(90, 200, text="(HUMAIN)", font=("Arial", 8))
+    
+    # Humain
         if self.next_pieces['human']:
             self.draw_next_piece(self.next_pieces['human'], 'human')
-        
-        # IA
+    
+    # Titre pour l'IA beaucoup plus bas
+        self.canvas_score.create_text(90, 285, text="Prochaine pièce:", font=("Arial", 10, "bold"))
+        self.canvas_score.create_text(90, 300, text="(IA)", font=("Arial", 8))
+    
+    # IA
         if self.next_pieces['ai']:
             self.draw_next_piece(self.next_pieces['ai'], 'ai')
-        
-        # Indicateurs de statut
-        y_pos = 350
-        
+    
+    # Indicateurs de statut encore plus bas
+        y_pos = 380
+    
         if self.rainbow_mode:
             self.canvas_score.create_text(90, y_pos, text="Mode Arc-en-ciel!", 
-                                         font=("Arial", 10), fill="purple")
+                                     font=("Arial", 10), fill="purple")
             y_pos += 25
-        
+    
         if self.slow_mode:
             self.canvas_score.create_text(90, y_pos, text="Pause douceur...", 
-                                         font=("Arial", 10), fill="blue")
-    
+                                     font=("Arial", 10), fill="blue")
+
     def draw_next_piece(self, piece, player):
-        y_offset = 250 if player == 'human' else 300
+    # Positions complètement séparées pour chaque joueur
+        y_offset = 240 if player == 'human' else 340
         color = COLORS[piece.shape_type]
-        
-        # Calculer le centre pour centrer la pièce
+    
+    # Calculer le centre pour centrer la pièce
         min_x = min(dx for dx, _ in SHAPES[piece.shape_type][0])
         max_x = max(dx for dx, _ in SHAPES[piece.shape_type][0])
         min_y = min(dy for _, dy in SHAPES[piece.shape_type][0])
         max_y = max(dy for _, dy in SHAPES[piece.shape_type][0])
         width = max_x - min_x + 1
         height = max_y - min_y + 1
-        
-        # Centrer la pièce
-        center_x = 90 - (width * BLOCK_SIZE / 2)
-        center_y = y_offset - (height * BLOCK_SIZE / 2)
-        
+    
+    # Centrer la pièce
+        center_x = 90 - (width * BLOCK_SIZE / 3)  # Réduire encore la taille pour l'affichage
+        center_y = y_offset - (height * BLOCK_SIZE / 3)
+    
+    # Taille de bloc réduite pour la prévisualisation
+        block_size = BLOCK_SIZE / 2  # Diminuer davantage la taille des blocs
+    
         for dx, dy in SHAPES[piece.shape_type][0]:
-            x1 = center_x + dx * (BLOCK_SIZE / 1.5)
-            y1 = center_y + dy * (BLOCK_SIZE / 1.5)
-            x2 = x1 + (BLOCK_SIZE / 1.5)
-            y2 = y1 + (BLOCK_SIZE / 1.5)
-            
+            x1 = center_x + dx * block_size
+            y1 = center_y + dy * block_size
+            x2 = x1 + block_size
+            y2 = y1 + block_size
+        
             if self.rainbow_mode:
                 color = random.choice(list(COLORS.values()))
-            
+        
             self.canvas_score.create_rectangle(x1, y1, x2, y2, fill=color, outline="white")
     
     def draw_grid(self, player):
