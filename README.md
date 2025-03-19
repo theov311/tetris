@@ -30,22 +30,11 @@ pip install cx_Freeze
 
 ## Lancer le jeu
 
-### Méthode 1: Exécuter directement le script Python
+### Utiliser un exécutable
 
 ```bash
-python tetris_game.py
+..\tetris\build\exe.win-amd64-3.11\tetris_game.exe
 ```
-
-### Méthode 2: Créer et utiliser un exécutable
-
-1. Créez l'exécutable:
-
-```bash
-python setup.py build
-```
-
-2. Naviguez vers le dossier `build` créé, puis dans le sous-dossier correspondant à votre système d'exploitation
-3. Exécutez le fichier `Tetris à deux joueurs.exe` (Windows) ou l'exécutable équivalent sur votre système
 
 ## Contrôles
 
