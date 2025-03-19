@@ -41,7 +41,6 @@ pip install cx_Freeze
 - **Flèches gauche/droite**: Déplacer la pièce horizontalement
 - **Flèche bas**: Accélérer la descente de la pièce
 - **Flèche haut**: Faire pivoter la pièce
-- **Espace**: Faire tomber la pièce instantanément (hard drop)
 - **P**: Mettre le jeu en pause/reprendre
 
 ## Fonctionnalités spéciales
